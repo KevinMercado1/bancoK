@@ -34,7 +34,7 @@ services:
 
   # 3. Frontend (Cliente Web) - ¡ESTE ES EL BLOQUE FALTANTE!
   frontend_client:
-    container_name: banook_frontend
+    container_name: bancok_frontend
     build:
       context: ./frontend
       # Este Dockerfile debe existir en ./frontend/Dockerfile.frontend

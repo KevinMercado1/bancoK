@@ -9,8 +9,11 @@ COPY package-lock.json .
 # Instala las dependencias de Node
 RUN npm install
 
-# Copia el resto del código fuente
-COPY . .
+# Copia los archivos públicos y el código fuente desde su ubicación real
+COPY public ./public
+COPY client/src ./src
+COPY client/tailwind.config.js .
+COPY client/postcss.config.js .
 
 # Construye la aplicación. Esto genera los archivos estáticos en la carpeta 'build' (o 'dist', según tu configuración)
 RUN npm run build 

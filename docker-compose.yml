@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # 1. Base de Datos PostgreSQL
+  postgres_db:
+    image: postgres:13-alpine
+    container_name: banco_postgres_db
+    environment:
+      POSTGRES_USER: adminbanco
+      POSTGRES_PASSWORD: passwordbanco
+      POSTGRES_DB: bancodb
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # 2. Backend (API)
+  api_banco:
+    container_name: banco_api_service
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '5007:5007'
+    depends_on:
+      - postgres_db
+    environment:
+      DATABASE_URL: postgresql://adminbanco:passwordbanco@postgres_db:5432/bancodb
+      JWT_SECRET: esteEsUnSecretoMuySecretoParaJWT123!
+      PORT: 5007
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+  # 3. Frontend (Cliente Web) - ¡ESTE ES EL BLOQUE FALTANTE!
+  frontend_client:
+    container_name: banook_frontend
+    build:
+      context: ./frontend
+      # Este Dockerfile debe existir en ./frontend/Dockerfile.frontend
+      dockerfile: Dockerfile.frontend
+
+    # Mapea el puerto 3000 (Host) al puerto 80 (Nginx en el contenedor)
+    ports:
+      - '3000:80'
+
+    depends_on:
+      - api_banco
+
+    environment:
+      # URL para que el frontend sepa cómo contactar a la API
+      REACT_APP_API_URL: http://api_banco:5007
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

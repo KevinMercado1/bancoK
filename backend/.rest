@@ -1,0 +1,31 @@
+POST http://localhost:5007/api/users/register
+Content-Type: application/json
+
+{
+  "fullName": "Kevin Mercado",
+  "pin": "4321"  
+}
+
+###
+
+POST http://localhost:5007/api/users/login
+Content-Type: application/json
+
+{
+  "accountNumber": "5527718465464712",
+  "pin": "4321"
+}
+
+###
+
+GET http://localhost:5007/api/users/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImFjY291bnROdW1iZXIiOiI1NTI3NzE4NDY1NDY0NzEyIiwiaWF0IjoxNzQ5NTIzMjcwLCJleHAiOjE3NDk1MjY4NzB9.Lzck1-eK-WHhw9w24ECtz3_0L-3ymHQL4XGlTufjaQU
+
+###
+POST http://localhost:5007/api/transactions/deposit
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImFjY291bnROdW1iZXIiOiI1NTI3NzE4NDY1NDY0NzEyIiwiaWF0IjoxNzQ5NTIzMjcwLCJleHAiOjE3NDk1MjY4NzB9.Lzck1-eK-WHhw9w24ECtz3_0L-3ymHQL4XGlTufjaQU
+
+{
+  "amount": 150.75
+}
